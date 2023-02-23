@@ -1,0 +1,44 @@
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.labels-container{
+    width: 50%;
+    border-radius: 15px;
+    padding: 10px;
+    background-color: #ddd;
+}
+
+.labels-container span{
+    margin-left: 2.5%;
+}
+
+.label-text{
+    margin-top: 20px;
+    display: block;
+}
+
+.checkBoxes{
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    grid-template-rows: auto auto auto auto;
+    margin-bottom: 20px;
+}
+
+input[type=text]{
+    display: block;
+    width: 90%;
+    margin-left: 2.5%;
+}
+
+.error{
+    border: 1px solid red;
+}
+
+h1{
+    margin: 10px;
+}
+

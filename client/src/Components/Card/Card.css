@@ -1,0 +1,25 @@
+div.pokemonCard{
+    margin: 1em 2em 1em 2em;
+    border: 1px solid #0069c0;
+    width: 15em;
+    text-align: justify;
+    background-image: linear-gradient(45deg, #2196f3, #ab3ed8);
+    border-radius: 1em;
+}
+
+div.pokemonCard img {
+    width: 100%;
+    height: auto;
+  }
+
+p.fromCard {
+    width: 100%;
+    height: 50%;
+    
+    text-align: center;
+}
+
+div.pCardContainer{
+    border-top: 1px solid #0069c0;
+    height: 10%;
+}

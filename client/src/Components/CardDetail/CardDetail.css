@@ -1,0 +1,30 @@
+.container-pokemonDetailCard{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+div.pokemonDetailCard{
+    margin: 5em;
+    border: 1px solid #0069c0;
+    width: 20em;
+    text-align: justify;
+    background-image: linear-gradient(45deg, #2196f3, #ab3ed8);
+    border-radius: 1em;
+}
+
+div.pokemonDetailCard img {
+    width: 100%;
+    height: auto;
+  }
+
+p.fromDetailCard {
+    width: 100%;
+    padding: auto;
+    text-align: center;
+}
+
+div.pDetailCardContainer{
+    border-top: 1px solid #01070d;
+    width: 100%;
+}
