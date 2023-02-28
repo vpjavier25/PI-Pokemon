@@ -1,34 +1,51 @@
-import { ADDCHARACTERS, GETTYPES, SEARCHCHARACTERBYNAME, FILTERBYTYPES, FILTERBYSOURCE, DIFFERENTSFORMSTOORDER, CREATEANEWPOKEMON } from './actions'
+import { ADD_CHARACTERS, GET_TYPES, SEARCH_CHARACTER_BY_NAME, FILTER_BY_TYPES, FILTER_BY_SOURCE, DIFFERENTS_FORMS_TO_ORDER, CREATE_A_NEW_POKEMON, SEARCH_CHARACTER_BY_NAME_ERROR, CLOSE_SEARCH } from './actions'
 
 const initialState = {
     pokemonsShow: [],
     allPokemons: [],
+    errorSearchByName:[],
     post:'',
+    postError:'',
     types:[]
 };
 
 export default function rootReducer(state = initialState, action) {
     switch (action.type) {
-        case ADDCHARACTERS:
+        case ADD_CHARACTERS:
             return {
                 ...state,
                 allPokemons: [...action.payload],
                 pokemonsShow: [...action.payload]
             };
         
-        case GETTYPES:
+        case GET_TYPES:
             return {
                 ...state,
                 types: [...action.payload]
             }
             
-        case SEARCHCHARACTERBYNAME:
+        case SEARCH_CHARACTER_BY_NAME:
             let pokemonsFound = [action.payload];
             return {
                 ...state, pokemonsShow: pokemonsFound
             }
-            
-        case FILTERBYTYPES:
+        
+        case SEARCH_CHARACTER_BY_NAME_ERROR:
+            let errorMessage = [action.payload];
+            return{
+                ...state, 
+                errorSearchByName: errorMessage,
+                pokemonsShow:[]
+            }
+        
+        case CLOSE_SEARCH:
+            return{
+                ...state,
+                pokemonsShow:[...state.allPokemons],
+                errorSearchByName:''
+            } 
+
+        case FILTER_BY_TYPES:
 
             if (action.payload === 'allPokemons' || action.payload === 'select') {
                 return {
@@ -43,7 +60,7 @@ export default function rootReducer(state = initialState, action) {
                 }
             }
             
-        case FILTERBYSOURCE:
+        case FILTER_BY_SOURCE:
 
             if (action.payload === 'All') {
                 return {
@@ -62,7 +79,7 @@ export default function rootReducer(state = initialState, action) {
             }
             
 
-        case DIFFERENTSFORMSTOORDER:
+        case DIFFERENTS_FORMS_TO_ORDER:
 
             if (action.payload === 'select') {
                 return {
@@ -103,7 +120,7 @@ export default function rootReducer(state = initialState, action) {
                 }
             }
         
-        case CREATEANEWPOKEMON:
+        case CREATE_A_NEW_POKEMON:
             return {
                 ...state, post: action.payload
             }

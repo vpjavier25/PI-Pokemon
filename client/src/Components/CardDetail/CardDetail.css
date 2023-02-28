@@ -1,30 +1,102 @@
-.container-pokemonDetailCard{
-    height: 100%;
-    display: flex;
-    justify-content: center;
+
+.pokemon-card-detail {
+    position: relative;
+    width: 16.5%;
+    margin: 1% 5% 1% 5%;
+    padding: 5px;
+    box-shadow: 4px 4px 4px #FFF2F2;
+    border-radius: 10px;
+    background-color: #F47C7C;
 }
 
-div.pokemonDetailCard{
-    margin: 5em;
-    border: 1px solid #0069c0;
-    width: 20em;
-    text-align: justify;
-    background-image: linear-gradient(45deg, #2196f3, #ab3ed8);
-    border-radius: 1em;
+.pokemon-card-detail-frame {
+    box-shadow: 2px 2px 2px rgba(193, 2, 6, 0.4);
+    width: 90%;
+    padding: 10px;
+    margin: 5%;
+    border-radius: 5px;
 }
 
-div.pokemonDetailCard img {
-    width: 100%;
-    height: auto;
-  }
+.pokemon-card-detail-close{
+    position: absolute; 
+    padding: 5px 11px 5px 11px;
+    right: -35px;
+    border-radius: 50%;
+    color: white;
+    background-color: red;
+    font-weight: bold;
 
-p.fromDetailCard {
+}
+
+.pokemon-card-detail-name {
+    position: absolute;
+    top:4px;
+    left: 5px;
+    border: 1px solid black;
+    padding: 5px;
+    color: white;
+    background-color: rgb(0, 0, 0);
+    border-radius: 8px;
+}
+
+.pokemon-card-detail-attack{
+    position: absolute;
+    right: 10px;
+    top: 4px;
+    border: 1px solid black;
+    padding: 5px;
+    color: white;
+    background-color: rgb(0, 0, 0);
+    border-radius: 8px;
+}
+
+.pokemon-card-detail-type-tag{
+    color:white;
+    background-color: black;
+    width: fit-content;
+    border-radius: 8px;
+    padding: 5px;
+    margin: 5px 0px 5px 0px;
+}
+
+.pokemon-detail-img {
     width: 100%;
-    padding: auto;
+    background-color: white;
+    margin: auto;
+    border-radius: 10px;
+}
+
+.pokemon-card-detail-types {
+    margin: 1px;
+    border: 1px solid black;
+    padding: 5px;
+    width: fit-content;
+}
+
+.pokemon-card-detail-types-item0 {
+    margin-bottom: 10px;
+    width: 100%;
     text-align: center;
+    color: white;
+    background-color: rgb(68, 59, 59);
+    border-radius: 10px;
+    margin: 5px 0px 5px 0px;
 }
 
-div.pDetailCardContainer{
-    border-top: 1px solid #01070d;
+.pokemon-card-detail-types-item1 {
+    margin-bottom: 10px;
     width: 100%;
+    text-align: center;
+    background-color: #FFFBF2;
+    border-radius: 10px;
+    margin: 5px 0px 10px 0px;
+}
+
+.pokemons-card-detail-info-container{
+    display: flex;
+    flex-wrap: wrap;
+}
+.pokemon-card-detail-tag-info , .pokemon-card-detail-info{
+    width: 50%;
+    text-align: center;
 }

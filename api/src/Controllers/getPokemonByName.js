@@ -81,7 +81,7 @@ function getPokemonByName(api, db) {
 
     }
 
-    throw new Error('Pokemon Not Found');
+    throw new Error('0 matches for the search');
 }
 
 module.exports = {

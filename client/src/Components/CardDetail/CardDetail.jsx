@@ -2,54 +2,57 @@ import './CardDetail.css'
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-export default function CardDetail() {
+export default function CardDetail({pokemon, onCloseCardDetail}) {
 
-    const { id } = useParams()
-    const [pokemon, setPokemon] = useState({})
+    // const { id } = useParams()
+    // const [pokemon, setPokemon] = useState({})
 
-    console.log(id)
+    // useEffect(() => {
+       
+    //     // async function resAxios() {
+    //     //     let res = await axios(`http://localhost:3001/pokemons/${id}`);
 
-    useEffect(() => {
-        fetch(`http://localhost:3001/pokemons/${id}`)
-            .then(res => res.json())
-            .then(res => setPokemon({
-                pokemonInfo: res
-            }))
-            .catch(error => console.log(error.message))
-        // async function resAxios() {
-        //     let res = await axios(`http://localhost:3001/pokemons/${id}`);
+    //     //     setPokemon({
+    //     //         pokemonInfo: res.data
+    //     //     })
+    //     // }
 
-        //     setPokemon({
-        //         pokemonInfo: res.data
-        //     })
-        // }
-
-        // resAxios();
-    }, [id])
+    //     // resAxios();
+    // }, [id])
 
     console.log(pokemon)
 
     return (
         <>
-            <div className='container-pokemonDetailCard'>
-                <div className="pokemonDetailCard">
+            <div className='pokemon-card-detail'>
+                <div className="pokemon-card-detail-name">{pokemon?.pokemonInfo?.name}</div>
+                <div className="pokemon-card-detail-attack">{pokemon?.pokemonInfo?.attack}</div>
+                <span className='pokemon-card-detail-close' onClick={onCloseCardDetail}>X</span>
 
-                    <img src={pokemon?.pokemonInfo?.image} alt={pokemon?.pokemonInfo?.name}></img>
 
-                    <div className="pDetailCardContainer">
-                        <p className="fromDetailCard">name: {pokemon?.pokemonInfo?.name}</p>
-                        <p className="fromDetailCard">id: {pokemon?.pokemonInfo?.id}</p>
-                        <p className="fromDetailCard">hp: {pokemon?.pokemonInfo?.hp}</p>
-                        <p className="fromDetailCard">attack: {pokemon?.pokemonInfo?.attack}</p>
-                        <p className="fromDetailCard">defense: {pokemon?.pokemonInfo?.defense}</p>
-                        <p className="fromDetailCard">speed: {pokemon?.pokemonInfo?.speed}</p>
-                        <p className="fromDetailCard">height: {pokemon?.pokemonInfo?.height}</p>
-                        <p className="fromDetailCard">weight: {pokemon?.pokemonInfo?.weight}</p>
-                        <p className="fromDetailCard">types: {pokemon?.pokemonInfo?.types.join(', ')}</p>
+                <div className='pokemon-card-detail-frame'>
+                    <img className='pokemon-detail-img' src={pokemon?.pokemonInfo?.image} alt={pokemon?.pokemonInfo?.name}></img>
+
+                    <div className='pokemons-card-detail-info-container'>
+                        <div className='pokemon-card-detail-tag-info'>id</div>
+                        <div className='pokemon-card-detail-info'>{pokemon?.pokemonInfo?.id}</div>
+                        <div className='pokemon-card-detail-tag-info'>hp </div>
+                        <div className='pokemon-card-detail-info'>{pokemon?.pokemonInfo?.hp}</div>
+                        <div className='pokemon-card-detail-tag-info'>defense</div>
+                        <div className='pokemon-card-detail-info'>{pokemon?.pokemonInfo?.defense}</div>
+                        {pokemon?.pokemonInfo?.speed? <div className='pokemon-card-detail-tag-info'>speed</div>: null}
+                        {pokemon?.pokemonInfo?.speed? <div className='pokemon-card-detail-info'>{pokemon?.pokemonInfo?.speed}</div>:null }
+                        {pokemon?.pokemonInfo?.height? <div className='pokemon-card-detail-tag-info'>height</div>: null}
+                        {pokemon?.pokemonInfo?.height? <div className='pokemon-card-detail-info'>{pokemon?.pokemonInfo?.height}</div>: null}
+                        {pokemon?.pokemonInfo?.weight ? <div className='pokemon-card-detail-tag-info'>weight</div>: null}
+                        {pokemon?.pokemonInfo?.weight? <div className='pokemon-card-detail-info'>{pokemon?.pokemonInfo?.weight}</div>: null }
                     </div>
+                        <div className='pokemon-card-detail-type-tag'>type</div>
+                        {pokemon?.pokemonInfo?.types ? pokemon.pokemonInfo.types.map((type, index) => <div className={`pokemon-card-detail-types-item${index}`}>{type}</div>) : null}
 
                 </div>
             </div>
+
 
 
 

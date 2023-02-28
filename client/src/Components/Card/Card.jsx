@@ -1,21 +1,21 @@
-import { Link } from "react-router-dom";
+import "./Card.css"
+//import { Link } from "react-router-dom";
 import './Card.css'
 
-export default function Card({ id, name, image, types }) {
+export default function Card({ id, name, image, types, onClickCard }) {
 
     return (
-        <div className="pokemonCard">
+        <div className="pokemon-card">
+            <div className="pokemon-card-name"><span>{name}</span></div>
+            <div className="pokemon-card-frame">
 
-            <Link to ={`/pokemons/${id}`} >
-                <img src={image} alt={name}/>
-            </Link>
-            <div className="pCardContainer">
-                <p className="fromCard">Name: {name}</p>
-                <p className="fromCard">Type/s: {types.join(', ')}</p>
+                <div className="pokemon-card-img-container" >
+                    <img id={id} className='pokemon-img' src={image} alt={name} onClick={onClickCard}/>
+                </div>
+
+                <div className="pokemon-card-types"><span>Type</span></div>
+                {types.map((type, index) => <p className={`pokemon-card-types-item${index}`}>{type}</p>)}
             </div>
-           
-
-
         </div>
     )
 }

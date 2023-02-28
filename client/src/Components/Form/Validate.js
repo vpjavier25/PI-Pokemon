@@ -10,6 +10,7 @@ export default function validate(input, event) {
         }
         if (input.name.split('').includes(' ')) errors.name = 'No se permiten espacios en los nombres'
         if (input.name.length > 40) errors.name = 'Ingresa un nombre de menos de 40 caracteres'
+        if (/[!@#$%^&*(),.?":{}|<>]/g.test(input.name)) errors.name = 'No se permiten caracteres especiales'
     }
 
 
@@ -68,13 +69,6 @@ export default function validate(input, event) {
         if (input.types.length > 3) errors.types = 'Seleccione maximo tres tipos'
     }
     
-
-
-
-
-
-
-
 
     return errors;
 

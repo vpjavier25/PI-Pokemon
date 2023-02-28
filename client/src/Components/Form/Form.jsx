@@ -102,65 +102,70 @@ export default function FormCreateANewPokemon() {
 
     return (
         <>
-            <form onSubmit={handlerSubmit} className='form'>
-                <h1>Crea tu propio pokemon: </h1>
+            <div className='form-container'>
 
-                <div className='labels-container'>
-                    <label className='label-text' htmlFor="Name"> * Name: </label>
-                    <input className={errors.name? 'error':null} id='Name' type="text" name='name' value={input.name} onChange={changeHandler} />
-                    {errors.name ? <span>{errors.name}</span> : null}
-                    <label className='label-text' htmlFor="Image"> * Image: </label>
-                    <input id='Image' type="text" name='image' value={input.image} onChange={changeHandler} />
-                    {errors.image ? <span>{errors.image}</span> : null}
-                    <label className='label-text' htmlFor="hp"> * Hp: </label>
-                    <input id='hp' type="text" name='hp' value={input.hp} onChange={changeHandler} />
-                    {errors.hp ? <span>{errors.hp}</span> : null}
-                    <label className='label-text' htmlFor="attack"> * Attack: </label>
-                    <input id='attack' type="text" name='attack' value={input.attack} onChange={changeHandler} />
-                    {errors.attack ? <span>{errors.attack}</span> : null}
-                    <label className='label-text' htmlFor="defense"> * Defense: </label>
-                    <input id='defense' type="text" name='defense' value={input.defense} onChange={changeHandler} />
-                    {errors.defense ? <span>{errors.defense}</span> : null}
-                    <label className='label-text' htmlFor="speed"> Speed: </label>
-                    <input id='speed' type="text" name='speed' value={input.speed} onChange={changeHandler} />
-                    {errors.speed ? <span>{errors.speed}</span> : null}
-                    <label className='label-text' htmlFor="height"> height: </label>
-                    <input id='height' type="text" name='height' value={input.height} onChange={changeHandler} />
-                    {errors.height ? <span>{errors.height}</span> : null}
-                    <label className='label-text' htmlFor="weight"> Weight: </label>
-                    <input id='weight' type="text" name='weight' value={input.weight} onChange={changeHandler} />
-                    {errors.weight ? <span>{errors.weight}</span> : null}
+                <form onSubmit={handlerSubmit} className='form'>
 
-                    <label className='label-text'> Types:</label>
+                    <h1>Create your own pokemon</h1>
 
-                    <div className='checkBoxes'>
+                    <div className='form-labels-container'>
+                        <label className='form-label-text' htmlFor="Name"> * Name: </label>
+                        <input className={errors.name ? 'error' : null} id='Name' type="text" name='name' value={input.name} onChange={changeHandler} />
+                        {errors.name ? <span>{errors.name}</span> : null}
+                        <label className='form-label-text' htmlFor="Image"> * Image: </label>
+                        <input id='Image' type="text" name='image' value={input.image} onChange={changeHandler} />
+                        {errors.image ? <span>{errors.image}</span> : null}
+                        <label className='form-label-text' htmlFor="hp"> * Hp: </label>
+                        <input id='hp' type="text" name='hp' value={input.hp} onChange={changeHandler} />
+                        {errors.hp ? <span>{errors.hp}</span> : null}
+                        <label className='form-label-text' htmlFor="attack"> * Attack: </label>
+                        <input id='attack' type="text" name='attack' value={input.attack} onChange={changeHandler} />
+                        {errors.attack ? <span>{errors.attack}</span> : null}
+                        <label className='form-label-text' htmlFor="defense"> * Defense: </label>
+                        <input id='defense' type="text" name='defense' value={input.defense} onChange={changeHandler} />
+                        {errors.defense ? <span>{errors.defense}</span> : null}
+                        <label className='form-label-text' htmlFor="speed"> Speed: </label>
+                        <input id='speed' type="text" name='speed' value={input.speed} onChange={changeHandler} />
+                        {errors.speed ? <span>{errors.speed}</span> : null}
+                        <label className='form-label-text' htmlFor="height"> height: </label>
+                        <input id='height' type="text" name='height' value={input.height} onChange={changeHandler} />
+                        {errors.height ? <span>{errors.height}</span> : null}
+                        <label className='form-label-text' htmlFor="weight"> Weight: </label>
+                        <input id='weight' type="text" name='weight' value={input.weight} onChange={changeHandler} />
+                        {errors.weight ? <span>{errors.weight}</span> : null}
 
+                        <div className='form-label-text'> Types:</div>
 
-                        {types.map((type, index) => {
-                            return (
-                                <>
-                                    <div>
-                                        <label key={index} htmlFor={type.name}> {type.name}</label>
-                                        <input id={type.name} hey={index} type={"checkbox"} value={index + 1} name='types' onChange={changeHandlerCheckbox} />
-                                    </div>
+                        <div className='checkBoxes'>
 
 
-                                </>
+                            {types.map((type, index) => {
+                                return (
+                                    <>
+                                        <div>
+                                            <label key={index} htmlFor={type.name}> {type.name}</label>
+                                            <input id={type.name} hey={index} type={"checkbox"} value={index + 1} name='types' onChange={changeHandlerCheckbox} />
+                                        </div>
 
 
-                            )
-                        })}
+                                    </>
+
+
+                                )
+                            })}
+                        </div>
+
+                        {errors.types ? <span>{errors.types}</span> : null}
+
+                        <button type="submit" style={{ display: 'block' }}>Send</button>
                     </div>
-
-                    {errors.types ? <span>{errors.types}</span> : null}
-
-                    <button type="submit" style={{ display: 'block' }}>Enviar</button>
-                </div>
-                {errorsInForm ? <span>{errorsInForm}</span> : null}
-                {statusPost ? <span>{statusPost}</span> : null} 
-            </form>
-            
-
+                    {errorsInForm ? <span>{errorsInForm}</span> : null}
+                    {statusPost ? <span>{statusPost}</span> : null}
+                </form>
+               
+                    <img className='form-img' src="https://images4.alphacoders.com/115/1159692.jpg" alt="picachu saying hi!!" />
+                
+            </div>
         </>
     )
 }

@@ -6,7 +6,7 @@ const {Pokemon} = require('../db')
 async function getAllPokemonsApi() {
     try {
 
-        const charactersWithUrl = await axios("https://pokeapi.co/api/v2/pokemon?limit=400&offset=0");//trae un arreglo de objetos conn las prodpedades count, next, previous, result(name, url)
+        const charactersWithUrl = await axios("https://pokeapi.co/api/v2/pokemon?limit=100&offset=0");//trae un arreglo de objetos conn las prodpedades count, next, previous, result(name, url)
 
         let pCharactersWithinfo = await Promise.all(charactersWithUrl.data.results.map(async(pChar)=>{
             return (
