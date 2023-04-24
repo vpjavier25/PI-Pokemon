@@ -2,83 +2,25 @@ import './Cards.css'
 import Card from "../Card/Card"
 import Pages from '../Pages/pages';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export default function Cards({onClickCard}) {
+export default function Cards({ItemsPerPage, onClickCard, currentPage, pages, clickHandler, nextHandler, prevHandler, minNumberOfPage, maxNumberOfPage, clickLoadPrev, clickLoadNext}) {
 
     const pokemons = useSelector((state) => state.pokemonsShow);
+    //me ayudo a que se renderizaran las cartas cuando aplico los filtros, sucedia que cargaba el componenete pages sin las cards y debia hacer click en pages para que renderizara las cards correspondientes
+    
+    //guarda el mensaje error contenido en el global state
     const searchError = useSelector((state) => state.errorSearchByName)
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const CurrentElements = 12;
+    
+ 
 
-    const limitofPages = 10;
-    const [minNumberOfPage, setMinNumberOfPage] = useState(1);
-    const [maxNumberOfPage, setmaxNumberOfPage] = useState(10);
-
-    const pages = [];
-    for (let i = 1; i < pokemons.length / CurrentElements; i++) {
-        pages.push(i);
-    }
-
-    const lastElementId = currentPage * CurrentElements;
-    const firstElementd = lastElementId - CurrentElements;
-    const ItemsPerPage = pokemons.slice(firstElementd, lastElementId);
-
-
-
-    const clickHandler = (event) => {
-
-        setCurrentPage(Number(event.target.id));
-
-    }
-
-    const nextHandler = () => {
-        if (currentPage + 1 > pages[pages.length - 1]) {
-            return null;
-        } else {
-            setCurrentPage(currentPage + 1);
-        }
-
-        if (currentPage + 1 === maxNumberOfPage + 1) {
-            setMinNumberOfPage(maxNumberOfPage);
-            setmaxNumberOfPage(maxNumberOfPage + limitofPages)
-        }
-
-    }
-
-    const prevHandler = () => {
-
-        if (currentPage - 1 < pages[0]) {
-            return null;
-        } else {
-            setCurrentPage(currentPage - 1);
-        }
-
-        setCurrentPage(currentPage - 1);
-        if (currentPage - 1 === minNumberOfPage - 1) {
-            setmaxNumberOfPage(minNumberOfPage)
-            setMinNumberOfPage(minNumberOfPage - limitofPages);
-        }
-    }
-
-    const clickLoadPrev = () => {
-        setmaxNumberOfPage(minNumberOfPage);
-        setMinNumberOfPage(minNumberOfPage - limitofPages);
-
-    }
-
-    const clickLoadNext = () => {
-        setMinNumberOfPage(maxNumberOfPage);
-        setmaxNumberOfPage(maxNumberOfPage + limitofPages);
-
-
-    }
+    
     return (
 
         <div className='cards-pagination'>
 
-            {pokemons.length > 13 ? <Pages
+            {pokemons.length > 12 ? <Pages
                 currentPage={currentPage}
                 pages={pages}
                 clickHandler={clickHandler}
@@ -92,7 +34,7 @@ export default function Cards({onClickCard}) {
             {searchError.length ? <div>{searchError[0].message}</div> : null}
            
             <div className='pokemon-cards'>
-                {pokemons.length && pokemons.length > 12 ? ItemsPerPage.map((pokemon, index) => {
+                {ItemsPerPage.map((pokemon, index) => {
                     return (
                         <Card
                             key={index}
@@ -102,20 +44,10 @@ export default function Cards({onClickCard}) {
                             types={pokemon.types}
                             onClickCard ={onClickCard} />
                     )
-                }) : pokemons.map((pokemon, index) => {
-                    return (
-                        <Card
-                            key={index}
-                            id={pokemon.id}
-                            name={pokemon.name}
-                            image={pokemon.image}
-                            types={pokemon.types} 
-                            onClickCard={onClickCard}/>
-                    )
                 })}
             </div>
 
-            {pokemons.length > 13 ? <Pages
+            {pokemons.length > 12 ? <Pages
                 currentPage={currentPage}
                 pages={pages}
                 clickHandler={clickHandler}

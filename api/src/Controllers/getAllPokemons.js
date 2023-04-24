@@ -1,19 +1,23 @@
 const axios = require('axios');
-const {Pokemon} = require('../db')
+const {Pokemon, Type} = require('../db')
 
 //controlador para la ruta get para todos los pokemones
 
+
+//creamos un controlador que busque en la api 
 async function getAllPokemonsApi() {
     try {
+        //trae un arreglo de objetos conn las prodpedades count, next, previous, result(name, url)
+        const charactersWithUrl = await axios("https://pokeapi.co/api/v2/pokemon?limit=100&offset=0");
 
-        const charactersWithUrl = await axios("https://pokeapi.co/api/v2/pokemon?limit=100&offset=0");//trae un arreglo de objetos conn las prodpedades count, next, previous, result(name, url)
-
+        //usamos promises all para resolver el array de promesas devuelto por map
         let pCharactersWithinfo = await Promise.all(charactersWithUrl.data.results.map(async(pChar)=>{
             return (
               await axios(pChar.url)
             );
-        }))//usamos promises all para resolver el array de promesas devuelto por map
+        }))
 
+        //seleccionamos la info que va a ser enviada a la page
         pCharactersWithinfo = pCharactersWithinfo.map( e => {
             return {
                 id: e.data.id,
@@ -31,8 +35,6 @@ async function getAllPokemonsApi() {
             }
         })
         
-        //console.log(pCharactersWithinfo); lo use para ver la respuesta
-
         return pCharactersWithinfo;
 
     } catch (error) {
@@ -40,12 +42,37 @@ async function getAllPokemonsApi() {
     }
 }
 
+//creamos un controlador que busque en la db
 async function getAllPokemonsDb(){
-    const pokemonsDb = Pokemon.findAll();
 
-    return pokemonsDb;
+    //encuentra todos los pokemones en la db 
+    const pokemonsDb = await Pokemon.findAll({
+        include:{
+            model:Type
+        }
+    });
+
+    //trabajamos la info y selecionamos lo que se vera en la page 
+     const pokemonsDbWorked = pokemonsDb.map((pokemon)=>{
+        return{
+            id: pokemon.id,
+            name: pokemon.name,
+            image: pokemon.image,
+            hp: pokemon.hp,
+            attack: pokemon.attack,
+            defense: pokemon.defense,
+            speed: pokemon.speed,
+            height: pokemon.height,
+            weight: pokemon.weight,
+            types:  pokemon.types.map((type)=> type.name)
+        } 
+     })
+    
+
+    return pokemonsDbWorked;
 }
 
+//creamos un controlador que seleccione los datos de la api y la db y devuelva todos lo pokemones
 function getAllPokemons (api, db){
     const pokemons = [...api,...db];
     return pokemons;

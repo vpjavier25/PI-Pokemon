@@ -9,6 +9,7 @@ export const FILTER_BY_TYPES = 'FILTER_BY_TYPES';
 export const FILTER_BY_SOURCE = 'FILTER_BY_SOURCE';
 export const DIFFERENTS_FORMS_TO_ORDER = 'DIFFERENTS_FORMS_TO_ORDER';
 export const CREATE_A_NEW_POKEMON = 'CREATE_A_NEW_POKEMON';
+export const UPDATE_CHARACTERS_PAGE = 'UPDATE_CHARACTER_PAGE'; 
 
 export function addPokemon() {
     return async function (dispatch) {
@@ -86,5 +87,12 @@ export function createNewPokemon(data){
             console.log(error);
         }
        
+    }
+}
+
+export function updatePokemonsInPage(data){
+    return{
+        type: UPDATE_CHARACTERS_PAGE,
+        payload: data
     }
 }

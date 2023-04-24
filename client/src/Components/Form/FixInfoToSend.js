@@ -1,11 +1,13 @@
-export default function infoToSend(input){
+export default function infoToSend(input, instruction){
 
     let inputToSend = input; 
     
     inputToSend.hp = Number(inputToSend.hp)
     inputToSend.attack = Number(inputToSend.attack)
     inputToSend.defense = Number(inputToSend.defense)
-    inputToSend.types = inputToSend.types.map((type)=> Number(type));
+    if(instruction === 'toSend') inputToSend.types = inputToSend.types.map((type)=> Number(Object.values(type)[0]));
+    if(instruction === 'toUpdateCharacter') inputToSend.types = inputToSend.types.map((type)=> (Object.keys(type)[0]));
+
     if (inputToSend.speed) inputToSend.speed = Number(inputToSend.speed)
     if (inputToSend.height) inputToSend.height = Number(inputToSend.height)
     if (inputToSend.weight) inputToSend.weight = Number(inputToSend.weight)

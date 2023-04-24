@@ -22,7 +22,7 @@ router.get('/pokemons', async (req, res) => {//obtiene todos los pokemones o el 
         } else {
             const allPokemonsApi = await getAllPokemonsApi();
             const allPokemonsDb = await getAllPokemonsDb();
-            const allPokemons = getAllPokemons (allPokemonsApi, allPokemonsDb)
+            const allPokemons = getAllPokemons (allPokemonsApi, allPokemonsDb);
             return res.status(200).json(allPokemons);
         }
 

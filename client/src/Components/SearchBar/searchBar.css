@@ -14,3 +14,17 @@
     font-size: 14px;
     top:75%;
 }
+
+.close-search span{
+    border-radius: 100%;
+    padding-left: 2.5px;
+    padding-right: 2.5px;
+    background-color: white;
+    color: black;
+    padding: auto;
+}
+
+.close-search span:hover{
+    background-color: red;
+    cursor: pointer;
+}

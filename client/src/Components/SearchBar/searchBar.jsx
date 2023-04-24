@@ -10,7 +10,7 @@ export default function SearchBar() {
     const dispatch = useDispatch();
 
     const [input, setInput] = useState({});
-    const [search, setSearch] = useState(false);
+    const [search, setSearch] = useState('');
 
     const onChangeHandler = (event) => {
         setInput({
@@ -21,15 +21,16 @@ export default function SearchBar() {
     const onClickHandlerSearch = (name) => {
         if (name) {
             dispatch(SearchByName(name));
+            
         } else {
             alert('Ingresa un nombre')
         }
-        setSearch(true);
+        setSearch(name);
     }
 
     const onClickHandlerCloseSearch = () => {
         dispatch(closeSeacrh());
-        setSearch(false);
+        setSearch('');
     }
 
 
@@ -38,7 +39,7 @@ export default function SearchBar() {
             <div className="search-bar">
                 <input type='search' onChange={onChangeHandler} placeholder='search a pokemon'></input>
                 <button type='button' onClick={() => onClickHandlerSearch(input.name)}>search</button>
-                {search ? <div className="close-search">"{input.name}"<span onClick={onClickHandlerCloseSearch}>x</span></div> : null}
+                {search ? <div className="close-search">{search}<span onClick={onClickHandlerCloseSearch}>x</span></div> : null}
             </div>
 
         </>

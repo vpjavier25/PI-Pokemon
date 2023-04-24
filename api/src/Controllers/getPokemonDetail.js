@@ -44,7 +44,7 @@ async function getPokemonDetailDb(id) {
             name: pokemonDb.name,
             image: pokemonDb.image,
             hp: pokemonDb.hp,
-            attack: pokemonDb.atack,
+            attack: pokemonDb.attack,
             defense: pokemonDb.defense,
             speed: pokemonDb.speed,
             height: pokemonDb.height,
@@ -65,9 +65,10 @@ async function getPokemonDetailDb(id) {
 
 function getPokemonDetail(api, db){
 
-
+    //en caso de encontrar un error (obejto con una sola key devuelte en el catch del controlador) no devuelve lo encontrado en la api
     if (Object.keys(api).length > 1) return api;
-   
+
+    // esto se debe a que cuando findByPk no encuentra nada debuelve null (ahora que lo vuelvo a analizar esto no es muy necesario);
     if (db !== null) {
         if (!db.hasOwnProperty('error')){
             return db;

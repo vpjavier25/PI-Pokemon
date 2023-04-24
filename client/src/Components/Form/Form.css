@@ -2,6 +2,7 @@
     background-color: #FFFBF2;
     display: grid;
     grid-template-columns: 50% 50%;
+    min-height: fit-content;
 }
 
 .form{
@@ -27,15 +28,19 @@
 }
 
 .form-label-text{
-    margin-top: 15px;
+    margin-top: 10px;
     display: block;
 }
 
 .checkBoxes{
     display: grid;
-    grid-template-columns: auto auto auto auto auto;
-    grid-template-rows: auto auto auto auto;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto auto auto auto auto;
     margin-bottom: 20px;
+}
+
+input[type=checkbox]{
+    cursor: pointer;
 }
 
 input[type=text]{
@@ -45,12 +50,11 @@ input[type=text]{
     border-radius: 5px;
     padding-top: 5px;
     padding-bottom: 5px;
-    
-    
+   
 }
 
 h1{
-    margin: 10px;
+    margin: 10px 0px 0px 0px;
 }
 
 button[type=submit]{
@@ -58,7 +62,17 @@ button[type=submit]{
     color: white;
     padding: 10px 20px 10px 20px;
     border-radius: 5px;
-    
+    margin-right: 35vw;
+    cursor: pointer;
+}
+
+.form-home-button{
+    text-decoration: none;
+    background-color: black;
+    color: white;
+    padding: 10px 20px 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .form-img{

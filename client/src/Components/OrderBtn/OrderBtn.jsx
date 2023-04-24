@@ -2,10 +2,11 @@ import "./OrderBtn.css";
 import { useDispatch } from "react-redux"
 import { order } from "../../redux/actions";
 
-export default function Order() {
+export default function Order({setPageOne}) {
     const dispatch = useDispatch();
 
     const changeOrder = (event) => {
+        setPageOne();
         dispatch(order(event.target.id));
     }
 
@@ -28,6 +29,8 @@ export default function Order() {
                     <div className="item-order" id="AlphDesc" onClick={changeOrder}>reverse Alphabetic order</div>
                     <div className="item-order" id="AscAtt" onClick={changeOrder}>Ascending attack</div>
                     <div className="item-order" id="DesAtt" onClick={changeOrder}>Descending attack</div>
+                    <div className="item-order" id="All" onClick={changeOrder}>Default order</div>
+
                 </div>
 
             </div>

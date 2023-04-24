@@ -1,9 +1,10 @@
 import './Form.css'
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import validate from "./Validate";
 import infoToSend from "./FixInfoToSend";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createNewPokemon } from "../../redux/actions";
+import { createNewPokemon} from "../../redux/actions";
 
 export default function FormCreateANewPokemon() {
 
@@ -11,8 +12,12 @@ export default function FormCreateANewPokemon() {
 
     const types = useSelector((state) => state.types);
 
+    // me trae el mensaje que se guarda luego de realizar el post
     const statusPost = useSelector((state) => state.post);
 
+    const allPokemons = useSelector((state)=> state.allPokemons);
+
+    //estado de los input del form 
     const [input, setInput] = useState({
         name: '',
         image: '',
@@ -26,67 +31,83 @@ export default function FormCreateANewPokemon() {
 
     })
 
-    const [inputCheckbox, setInputCheckbox] = useState([]);
+    //estado para saber cuando un input fue usado por primera vez
+    const [beenCalled, setBeenCalled] = useState({
+        name: false,
+        image: false,
+        hp: false,
+        attack: false,
+        defense: false,
+    });
 
+    //estado para manejar los errores en los inputs
     const [errors, setErrors] = useState({});
 
+    //estado que almacena un mensaje luego de enviar el form
     const [errorsInForm, setErrorsInForm] = useState('');
 
+    //se maneja los cambios en los inputs. se validan los inputs y se actualizan los errores, se actualiza el estado para los inputs que furon usados(esto para que no me de mensaje de error los inputs que no e tocado)    
     const changeHandler = (event) => {
-        setInput({
-            ...input,
-            [event.target.name]: event.target.value
-        });
+        //si no es types se debe a que tipes me debe dejar guardar info sobre la que ya tenia sin que el estado me debuelva copia de lo que ya tenia mas copia de lo que tenia + lo ingresado
+        if (event.target.name !== 'types') {
+            setInput({
+                ...input,
+                [event.target.name]: event.target.value
+            });
 
-        setErrors(validate({
-            ...input,
-            [event.target.name]: event.target.value
-        }, event.target.name));
-    }
+            setErrors(validate({
+                ...input,
+                [event.target.name]: event.target.value
+            },allPokemons));
 
-    console.log(errors)
+            setBeenCalled({
+                ...beenCalled, [event.target.name]: true
+            })
+        } else {
+            //para que las checkbox funciones como se piensa intuitivamente
+            if (input.types.includes(event.target.value)) {
+
+                let checkboxsSelected = input.types.filter((e) => e !== event.target.value);
+
+                setInput({
+                    ...input,
+                    [event.target.name]: checkboxsSelected
+                }); 
+
+                setErrors(validate({
+                    ...input,
+                    [event.target.name]: checkboxsSelected
+                }));
+            } else {
+                setInput({
+                    ...input,
+                    [event.target.name]: [...input[event.target.name], event.target.value]
+                });
+
+                setErrors(validate({
+                    ...input,
+                    [event.target.name]: [...input[event.target.name], event.target.value]
+                }));
+            }
 
 
-    const changeHandlerCheckbox = (event) => {
-
-        if (inputCheckbox.includes(event.target.value)) {
-
-            let checkboxsSelected = inputCheckbox.filter((e) => e !== event.target.value);
-
-            setInputCheckbox([...checkboxsSelected])
-
-            return
         }
 
-        setInputCheckbox([
-            ...inputCheckbox, event.target.value
-        ])
     }
-    // se utiliza para controlar el pequeño delay de la funcion de actualizacion de estado
-    useEffect(() => {
-        setInput({
-            ...input, types: [...inputCheckbox]
-        })
 
-        setErrors(validate({
-            ...input, types: [...inputCheckbox]
-        }, 'types'));
-
-    }, [inputCheckbox])
-
-    //__________________________________________________________________________________
-
-    console.log(inputCheckbox)
     console.log(input)
 
-
+    // manejador para cuando se submitea el form
     const handlerSubmit = (event) => {
+        //previene a re-renderizacion cuando se hace el evento submit
         event.preventDefault();
 
+        //si hay keys en erros no envia el form y devuelve el mensaje 
         if (Object.keys(errors).length > 0) {
             setErrorsInForm('Hay informacion incorrecta o Falta informacion por llenar');
             return;
         }
+        //si esta vacio algun campo obligatorio no envia el form y devuelve el mensaje
         if (!input.name || !input.image || !input.hp || !input.attack || !input.defense || !input.types[0]) {
             setErrorsInForm('Hay informacion incorrecta o Falta informacion por llenar');
             return;
@@ -94,8 +115,11 @@ export default function FormCreateANewPokemon() {
             setErrorsInForm('');
         }
 
-        let inputToSend = infoToSend({ ...input });
 
+        //si todo esta bien se utiliza la funcion infoToSend, la cual arregla la informacion al formato en el que el modelo de la db la recibe
+        let inputToSend = infoToSend({ ...input }, 'toSend') ;
+        //se crea na copia el el estado global en la propiedad donde estan todos lo pokemones para que el pokemon creado se mustre sin necesidad de recargar la pag
+        
         dispatch(createNewPokemon(inputToSend));
     }
 
@@ -111,19 +135,19 @@ export default function FormCreateANewPokemon() {
                     <div className='form-labels-container'>
                         <label className='form-label-text' htmlFor="Name"> * Name: </label>
                         <input className={errors.name ? 'error' : null} id='Name' type="text" name='name' value={input.name} onChange={changeHandler} />
-                        {errors.name ? <span>{errors.name}</span> : null}
+                        {beenCalled.name && errors.name ? <span>{errors.name}</span> : null}
                         <label className='form-label-text' htmlFor="Image"> * Image: </label>
                         <input id='Image' type="text" name='image' value={input.image} onChange={changeHandler} />
-                        {errors.image ? <span>{errors.image}</span> : null}
+                        {beenCalled.image && errors.image ? <span>{errors.image}</span> : null}
                         <label className='form-label-text' htmlFor="hp"> * Hp: </label>
                         <input id='hp' type="text" name='hp' value={input.hp} onChange={changeHandler} />
-                        {errors.hp ? <span>{errors.hp}</span> : null}
+                        {beenCalled.hp && errors.hp ? <span>{errors.hp}</span> : null}
                         <label className='form-label-text' htmlFor="attack"> * Attack: </label>
                         <input id='attack' type="text" name='attack' value={input.attack} onChange={changeHandler} />
-                        {errors.attack ? <span>{errors.attack}</span> : null}
+                        {beenCalled.attack && errors.attack ? <span>{errors.attack}</span> : null}
                         <label className='form-label-text' htmlFor="defense"> * Defense: </label>
                         <input id='defense' type="text" name='defense' value={input.defense} onChange={changeHandler} />
-                        {errors.defense ? <span>{errors.defense}</span> : null}
+                        {beenCalled && errors.defense ? <span>{errors.defense}</span> : null}
                         <label className='form-label-text' htmlFor="speed"> Speed: </label>
                         <input id='speed' type="text" name='speed' value={input.speed} onChange={changeHandler} />
                         {errors.speed ? <span>{errors.speed}</span> : null}
@@ -143,8 +167,8 @@ export default function FormCreateANewPokemon() {
                                 return (
                                     <>
                                         <div>
-                                            <label key={index} htmlFor={type.name}> {type.name}</label>
-                                            <input id={type.name} hey={index} type={"checkbox"} value={index + 1} name='types' onChange={changeHandlerCheckbox} />
+                                            <label htmlFor={type.name}> {type.name}</label>
+                                            <input id={type.name} type={"checkbox"} value={index + 1} name='types' onChange={changeHandler} />
                                         </div>
 
 
@@ -157,14 +181,18 @@ export default function FormCreateANewPokemon() {
 
                         {errors.types ? <span>{errors.types}</span> : null}
 
-                        <button type="submit" style={{ display: 'block' }}>Send</button>
+                        <button type="submit">Send</button>
+                        <Link to='/home' >
+                            <button type='text' className='form-home-button'>Home</button>
+                        </Link>
+
                     </div>
                     {errorsInForm ? <span>{errorsInForm}</span> : null}
                     {statusPost ? <span>{statusPost}</span> : null}
                 </form>
-               
-                    <img className='form-img' src="https://images4.alphacoders.com/115/1159692.jpg" alt="picachu saying hi!!" />
-                
+
+                <img className='form-img' src="https://images4.alphacoders.com/115/1159692.jpg" alt="picachu saying hi!!" />
+
             </div>
         </>
     )

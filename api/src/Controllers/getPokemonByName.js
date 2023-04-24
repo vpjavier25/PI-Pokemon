@@ -51,7 +51,7 @@ async function getPokemonByNameDb(name) {
             name: pokemonDb[0].name,
             image: pokemonDb[0].image,
             hp: pokemonDb[0].hp,
-            attack: pokemonDb[0].atack,
+            attack: pokemonDb[0].attack,
             defense: pokemonDb[0].defense,
             speed: pokemonDb[0].speed,
             height: pokemonDb[0].height,
@@ -70,7 +70,7 @@ async function getPokemonByNameDb(name) {
 }
 
 function getPokemonByName(api, db) { 
-    // seleeciona la respuesta que contenga la informacion necesitdad, esto debido a que los pokemones que estan en la db no esta en la api
+    // selecciona la respuesta que contenga la informacion necesitdad, esto debido a que los pokemones que estan en la db no esta en la api
 
     if (Object.keys(api).length > 1) return api;
 

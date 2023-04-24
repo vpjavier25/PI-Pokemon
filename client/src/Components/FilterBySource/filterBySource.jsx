@@ -2,27 +2,20 @@ import "./FilterBySource.css";
 import { useDispatch } from "react-redux";
 import { filterbySource } from "../../redux/actions";
 
-export default function FilterBySource() {
+export default function FilterBySource({setPageOne}) {
 
     const dispatch = useDispatch();
 
     const selected = (event) => {
         console.log(event.target.id)
+        setPageOne();
         dispatch(filterbySource(event.target.id))
+        
     }
 
     return (
         <>
-            {/* <div>
-                <label htmlFor="SelectBySource">By source: </label>
-                <select id="SelectBySource" name="SelectBySource" defaultValue="select" onChange={ChangeSource}>
-                    <option value="select">--select a tag--</option>
-                    <option value="Api">Api</option>
-                    <option value="Db">Data base</option>
-                    <option value="All">From all Sources</option>
-                </select>
-            </div> */}
-
+            
             <div className="dropdown-filter-by-source">
                 <span>Filter pokemons by source</span>
                 <div className="dropdown-filter-by-source-content">
